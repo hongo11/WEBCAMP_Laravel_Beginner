@@ -15,7 +15,12 @@ class TaskController extends Controller
      */
     public function list()
     {
-        return view('task.list');
+        // 一覧の取得
+        $list = TaskModel::where('user_id', Auth::id())->get();
+//$sql = TaskModel::where('user_id', Auth::id())->toSql();
+//echo "<pre>\n"; var_dump($sql, $list); exit;
+        //
+        return view('task.list', ['list' => $list]);
     }
     /**
      * タスクの新規登録
