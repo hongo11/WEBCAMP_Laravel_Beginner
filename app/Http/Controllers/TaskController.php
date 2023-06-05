@@ -24,18 +24,12 @@ class TaskController extends Controller
         $per_page = 20;
 
         // 一覧の取得
-        $list = TaskModel::where('user_id', Auth::id())
-                         ->orderBy('priority', 'DESC')
-                         ->orderBy('period')
-                         ->orderBy('created_at')
-                         ->paginate($per_page);
-                        // ->get();
+        $list = $this->getListBuilder()
+                     ->paginate($per_page);
+
 /*
-$sql = TaskModel::where('user_id', Auth::id())
-                 ->orderBy('priority', 'DESC')
-                 ->orderBy('period')
-                 ->orderBy('created_at')
-                 ->toSql();
+$sql = $this->getListBuilder()
+            ->toSql();
 //echo "<pre>\n"; var_dump($sql, $list); exit;
 var_dump($sql);
 */
@@ -225,4 +219,45 @@ var_dump($sql);
         // 一覧に遷移する
         return redirect('/task/list');
     }
+       /**
+     * CSV ダウンロード
+     */
+    public function csvDownload()
+    {
+        /* 「ダウンロードさせたいCSV」を作成する */
+        // データを取得する
+        $list = $this->getListBuilder()->get();
+
+        // バッファリングを開始
+        ob_start();
+
+        // 「書き込み先を"出力"にした」ファイルハンドルを作成する
+        $file = new \SplFileObject('php://output', 'w');
+        // CSVをファイルに書き込む(出力する)
+        foreach($list as $datum) {
+            $file->fputcsv($datum->toArray());
+        }
+
+        // 現在のバッファの中身を取得し、出力バッファを削除する
+        $csv_string = ob_get_clean();
+
+        // 文字コードを変換する
+        $csv_string_sjis = mb_convert_encoding($csv_string, 'SJIS', 'UTF-8');
+
+        // CSVを出力する
+        return response($csv_string_sjis)
+                ->header('Content-Type', 'text/csv')
+                ->header('Content-Disposition', 'attachment; filename="test.csv"');
+    }
+    
+    /**
+ * タスク一覧のクエリビルダを取得する
+ *
+ * @return \Illuminate\Database\Eloquent\Builder
+ */
+protected function getListBuilder()
+{
+    return TaskModel::query();
+}
+
 }
