@@ -251,13 +251,13 @@ var_dump($sql);
     }
     
     /**
- * タスク一覧のクエリビルダを取得する
- *
- * @return \Illuminate\Database\Eloquent\Builder
- */
-protected function getListBuilder()
-{
-    return TaskModel::query();
-}
-
+     * 一覧用の Illuminate\Database\Eloquent\Builder インスタンスの取得
+     */
+    protected function getListBuilder()
+    {
+        return TaskModel::where('user_id', Auth::id())
+                     ->orderBy('priority', 'DESC')
+                     ->orderBy('period')
+                     ->orderBy('created_at');
+    }
 }
