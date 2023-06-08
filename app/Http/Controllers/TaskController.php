@@ -249,7 +249,7 @@ var_dump($sql);
                 ->header('Content-Type', 'text/csv')
                 ->header('Content-Disposition', 'attachment; filename="test.csv"');
     }
-    
+
     /**
      * 一覧用の Illuminate\Database\Eloquent\Builder インスタンスの取得
      */

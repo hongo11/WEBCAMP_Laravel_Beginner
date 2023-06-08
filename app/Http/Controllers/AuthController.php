@@ -25,7 +25,7 @@ class AuthController extends Controller
      */
     public function login(LoginPostRequest $request)
     {
-        // validate済
+        // validat済
 
         // データの取得
         $datum = $request->validated();
