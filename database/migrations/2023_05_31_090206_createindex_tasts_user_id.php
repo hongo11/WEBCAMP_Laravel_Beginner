@@ -12,12 +12,13 @@ class CreateindexTastsUserId extends Migration
      * @return void
      */
     public function up()
-    {
-        //
+{
+    if (Schema::hasTable('tasks')) {
         Schema::table('tasks', function (Blueprint $table) {
             $table->index('user_id');
         });
     }
+}
 
     /**
      * Reverse the migrations.
