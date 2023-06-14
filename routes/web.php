@@ -7,7 +7,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
-
+use App\Http\Controllers\CompletedTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +21,10 @@ use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 */
 
 // タスク管理システム
+// Login Route
 Route::get('/', [AuthController::class, 'index'])->name('front.index');
 Route::post('/login', [AuthController::class, 'login']);
+
 // 認可処理
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/task')->group(function () {
@@ -35,14 +37,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/complete/{task_id}', [TaskController::class, 'complete'])->whereNumber('task_id')->name('complete');
         Route::get('/csv/download', [TaskController::class, 'csvDownload']);
     });
-    //
+
     Route::get('/logout', [AuthController::class, 'logout']);
 });
 
 
 // 管理画面
 Route::prefix('/admin')->group(function () {
-    Route::get('', [AdminAuthController::class, 'index'])->name('admin.index');
+    Route::get('/', [AdminAuthController::class, 'index'])->name('admin.index');
     Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.login');
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('/top', [AdminHomeController::class, 'top'])->name('admin.top');
@@ -60,5 +62,5 @@ Route::get('/welcome/second', [WelcomeController::class, 'second']);
 Route::get('/test', [TestController::class, 'index']);
 Route::post('/test/input', [TestController::class, 'input']);
 
-//課題用
+// 課題用
 Route::get('/completed_tasks/list', [CompletedTaskController::class, 'list'])->name('completed_tasks.list');

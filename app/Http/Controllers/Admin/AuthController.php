@@ -20,13 +20,13 @@ class AuthController extends Controller
         return view('admin.index');
     }
 
-      /**
+    /**
      * ログイン処理
      *
      */
     public function login(AdminLoginPostRequest $request)
     {
-        // validate済
+        // validat済
 
         // データの取得
         $datum = $request->validated();
@@ -43,5 +43,17 @@ class AuthController extends Controller
         //
         $request->session()->regenerate();
         return redirect()->intended('/admin/top');
+    }
+
+    /**
+     * ログアウト処理
+     *
+     */
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        $request->session()->regenerateToken();  // CSRFトークンの再生成
+        $request->session()->regenerate();  // セッションIDの再生成
+        return redirect(route('admin.index'));
     }
 }
