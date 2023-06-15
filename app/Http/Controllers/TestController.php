@@ -19,14 +19,14 @@ class TestController extends Controller
         return view('test.index');
     }
 
-     /**
+    /**
      * 入力を受け取る
      *
      * @return \Illuminate\View\View
      */
     public function input(TestPostRequest $request)
     {
-        // validate済
+        // validat済
 
         // データの取得
         $validatedData = $request->validated();

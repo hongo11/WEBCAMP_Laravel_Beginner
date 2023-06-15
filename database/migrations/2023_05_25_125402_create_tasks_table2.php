@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTasksTable2 extends Migration
+class CreateTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateTasksTable2 extends Migration
      */
     public function up()
     {
-        Schema::create('completed_tasks', function (Blueprint $table) {
-            $table->unsignedInteger('id');
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->id();
             $table->string('name', 128)->comment('タスク名');
             $table->date('period')->comment('タスクの期限');
             $table->text('detail')->comment('タスクの詳細');
@@ -22,10 +22,8 @@ class CreateTasksTable2 extends Migration
             $table->unsignedBigInteger('user_id')->comment('このタスクの所有者');
             $table->foreign('user_id')->references('id')->on('users'); // 外部キー制約
             //$table->timestamps();
-            $table->dateTime('created_at')->useCurrent()->comment('タスク完了日時');
+            $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent()->useCurrentOnUpdate();
-            //
-            $table->primary('id');
         });
     }
 
@@ -36,6 +34,6 @@ class CreateTasksTable2 extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('completed_tasks');
+        Schema::dropIfExists('tasks');
     }
 }

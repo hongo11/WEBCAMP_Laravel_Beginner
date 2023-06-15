@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateindexTastsUserId extends Migration
+class CreateTableName extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateindexTastsUserId extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->index('user_id');
+        Schema::create('table_name', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -26,9 +26,6 @@ class CreateindexTastsUserId extends Migration
      */
     public function down()
     {
-        //
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->dropIndex('user_id');
-        });
+        Schema::dropIfExists('table_name');
     }
 }
