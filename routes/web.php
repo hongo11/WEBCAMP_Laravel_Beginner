@@ -39,6 +39,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 });
 
+Route::get('/completed_tasks/list', [CompletedTaskController::class, 'list'])->name('completed_tasks.list');
+
+
 
 // 管理画面
 Route::prefix('/admin')->group(function () {

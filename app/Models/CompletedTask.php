@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use App\Models\CompletedTask;
 
-class CompletedTask extends Model
+class CompletedTaskController extends Controller
 {
-    use HasFactory;
-
-    /**
-     * 複数代入不可能な属性
-     */
-    protected $guarded = [];
+    public function list()
+    {
+        $completedTasks = CompletedTask::all();
+        return view('task.completed_list', compact('completedTasks'));
+    }
 }

@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompletedTask;
 use Illuminate\Http\Request;
-
+use App\Models\CompletedTask;
 
 class CompletedTaskController extends Controller
 {
     public function list()
-{
-    // 処理を記述する
-    // ...
-    return view('task.completed_list', ['list' => $list]);
-}
+    {
+        $completedTasks = CompletedTask::all();
+        return view('task.completed_list', compact('completedTasks'));
+    }
 }
