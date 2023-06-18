@@ -224,6 +224,9 @@ var_dump($sql);
             DB::rollBack();
             // 完了失敗メッセージ出力
             $request->session()->flash('front.task_completed_failure', true);
+
+            //具体的なエラーの表示
+            var_dump($e->getMessage()); exit;
         }
 
         // 一覧に遷移する
@@ -318,7 +321,7 @@ var_dump($sql);
             $file->fputcsv($awk);
         }
 
-        // 現在���バッファの中身を取得し、出力バッファを削除する
+        // 現在�����バッファの中身を取得し、出力バッファを削除する
         $csv_string = ob_get_clean();
 
         // 文字コードを変換する

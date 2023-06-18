@@ -1,3 +1,21 @@
+ //completed_list.blade.php ファイル内に、完了タスク一覧を表示するためのHTMLコードを追加
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Completed Tasks</title>
+</head>
+<body>
+    <h1>Completed Tasks</h1>
+    <ul>
+        @foreach($completedTasks as $task)
+            <li>{{ $task->name }}</li>
+        @endforeach
+    </ul>
+</body>
+</html>
+
+
+
 @extends('layout')
 
 @section('title')

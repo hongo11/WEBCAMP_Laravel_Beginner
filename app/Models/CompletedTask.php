@@ -9,7 +9,7 @@ class CompletedTaskController extends Controller
 {
     public function list()
     {
-        $completedTasks = CompletedTask::all();
+        $completedTasks = \App\Models\CompletedTask::all(); // クラス名の前に\を追加
         return view('task.completed_list', compact('completedTasks'));
     }
 }
