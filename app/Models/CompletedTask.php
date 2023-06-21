@@ -1,15 +1,35 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
-use Illuminate\Http\Request;
-use App\Models\CompletedTask;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class CompletedTaskController extends Controller
+class CompletedTask extends Model
 {
-    public function list()
-    {
-        $completedTasks = \App\Models\CompletedTask::all(); // クラス名の前に\を追加
-        return view('task.completed_list', compact('completedTasks'));
+    use HasFactory;
+
+    /**
+     * 複数代入不可能な属性
+     */
+    protected $guarded = [];
+
+public function getPriorityString()
+{
+    switch ($this->priority) {
+        case 1:
+            return '高い';
+        case 2:
+            return '普通';
+        case 3:
+            return '低い';
+        default:
+            return '普通';
     }
+}
+public function getCompletedAtFormattedAttribute()
+{
+    return $this->completed_at->format('Y-m-d H:i:s');
+}
+
 }
