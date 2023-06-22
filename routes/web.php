@@ -70,3 +70,7 @@ Route::get('/completed_tasks/list', [CompletedTaskController::class, 'list'])->n
 Route::get('/task/list', [TaskController::class, 'list'])->name('task.list');
 //ログアウト
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// 会員登録
+Route::get('/user/register', [UserController::class, 'index'])->name('user.register');
+Route::post('/user/register', [UserController::class, 'register'])->name('user.register.post');
