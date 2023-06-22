@@ -12,17 +12,16 @@
             <th>タスク名</th>
             <th>期限</th>
             <th>重要度</th>
-            
             <th>タスク終了日</th>
         </tr>
         @foreach ($completedTasks as $task)
         <tr>
             <td>{{ $task->name }}</td>
             <td>{{ $task->period }}</td>
-            <td>{{ $task->priority }}</td>
+            <td>{{ $task->getPriorityString() }}</td>
             <td>
-                @if ($task->completed_at)
-                    {{ $task->completed_at->format('Y-m-d H:i:s') }}
+                @if ($task->created_at)
+                    {{ $task->created_at->setTimezone('Asia/Tokyo')->format('Y-m-d H:i:s') }}
                 @else
 
                 @endif
@@ -33,11 +32,21 @@
 
     <p>現在{{ $completedTasks->currentPage() }}ページ目</p>
     <p>
-        {!! $completedTasks->onFirstPage() ? '最初のページ' : '<a href="'.$completedTasks->previousPageUrl().'">前のページ</a>' !!}
-        /
-        {!! $completedTasks->hasMorePages() ? '<a href="'.$completedTasks->nextPageUrl().'">次のページ</a>' : '最後のページ' !!}
-    </p>
+        @if ($completedTasks->onFirstPage())
+    最初のページ / 前に戻る /
+        @else
+            <a href="{{ $completedTasks->url(1) }}">最初のページ</a> /
+        @endif
 
+        @if ($completedTasks->previousPageUrl())
+            <a href="{{ $completedTasks->previousPageUrl() }}">前に戻る</a> /
+        @endif
+
+        @if ($completedTasks->hasMorePages())
+            <a href="{{ $completedTasks->nextPageUrl() }}">次に進む</a>
+        @endif
+    </p>
+    <hr> <!-- 横ライン -->
     <a href="{{ route('logout') }}">ログアウト</a>
 </body>
 </html>

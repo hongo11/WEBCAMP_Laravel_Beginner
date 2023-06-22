@@ -18,11 +18,11 @@ public function getPriorityString()
 {
     switch ($this->priority) {
         case 1:
-            return '高い';
+            return '低い';
         case 2:
             return '普通';
         case 3:
-            return '低い';
+            return '高い';
         default:
             return '普通';
     }
